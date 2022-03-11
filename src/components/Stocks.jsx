@@ -1,22 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGetIntradayQuery } from '../services/stockApi';
 import LineChart from './LineChart';
+import { TailSpin } from 'react-loader-spinner';
+import { Col, Row, Typography, Select } from 'antd';
+const { Option } = Select;
 
 const Stocks = () => {
-  const { data, isFetching } = useGetIntradayQuery();
+  const time = ['1min', '5min', '15min', '30min', '60min'];
+  const [timePeriod, setTimePeriod] = useState('60min');
+  const { data, isFetching } = useGetIntradayQuery(timePeriod);
 
-  if (isFetching) {
-    return 'Loading...';
-  }
-  // console.log(data);
-  // console.log(data['Meta Data']['1. Information']);
-  // console.log(Object.keys(data['Meta Data']));
-  console.log('hi');
-  console.log(data[`Time Series (5min)`][`2022-03-09 09:05:00`][`4. close`]);
+  console.log(data);
+
+  // if (isFetching) {
+  //   return (
+  //     <TailSpin height="100" width="100" color="blue" ariaLabel="loading" />
+  //   );
+  // }
+
   return (
     <div>
-      Stocks
-      <LineChart stockName={'IBM'} stockHistory={data} />
+      {isFetching ? (
+        <TailSpin height="100" width="100" color="blue" ariaLabel="loading" />
+      ) : (
+        <LineChart
+          stockName={'IBM'}
+          stockHistory={data}
+          timePeriod={timePeriod}
+        />
+      )}
+      <Select
+        defaultValue="60min"
+        style={{ width: '200px', marginTop: '20px' }}
+        placeholder="Select Time Period"
+        onChange={(value) => setTimePeriod(value)}
+      >
+        {time.map((date) => (
+          <Option key={date}>{date}</Option>
+        ))}{' '}
+      </Select>
     </div>
   );
 };
