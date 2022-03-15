@@ -3,7 +3,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 import { Line } from 'react-chartjs-2';
 
-const LineChart = ({ stockName, stockHistory, timePeriod }) => {
+const LineChart = ({ stockHistory, timePeriod }) => {
   const stockPriceClosed = [];
   const stockTimeStamp = [];
 
@@ -50,8 +50,7 @@ const LineChart = ({ stockName, stockHistory, timePeriod }) => {
   };
 
   return (
-    <div>
-      LineChart
+    <div style={{ marginTop: '20px' }}>
       <Line data={data} options={options} />
     </div>
   );
