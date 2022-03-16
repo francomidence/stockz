@@ -12,9 +12,9 @@ export const stockApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
     getIntraday: builder.query({
-      query: (timePeriod) =>
+      query: ({ symbol, timePeriod }) =>
         createRequest(
-          `query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=${timePeriod}&apikey=${apiKey}`
+          `query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${timePeriod}&apikey=${apiKey}`
         ),
     }),
     getSearchEndpoint: builder.query({
